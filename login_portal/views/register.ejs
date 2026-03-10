@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 44px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .card .subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 0.4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .form-group input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 14px;
+        }
+
+        .form-row .form-group { flex: 1; }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn:active { transform: translateY(0); }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 28px 0;
+            color: rgba(255,255,255,0.25);
+            font-size: 0.8rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .divider span { padding: 0 14px; }
+
+        .footer-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .footer-text a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover { text-decoration: underline; }
+
+        .error-msg {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #fca5a5;
+            text-align: center;
+        }
+
+        .upload-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .upload-group label.section-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 0.4px;
+            text-align: left;
+        }
+
+        .avatar-upload {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .avatar-upload .avatar-preview {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .avatar-upload:hover .avatar-preview {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .avatar-preview .placeholder {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .avatar-preview .placeholder .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .avatar-preview .placeholder span {
+            font-size: 0.7rem;
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-name-text {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            min-height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>✨ Create Account</h1>
+        <p class="subtitle">Join us today — it's free!</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="error-msg"><%= error %></div>
+        <% } %>
+
+        <form action="/register" method="POST" enctype="multipart/form-data">
+            <div class="upload-group">
+                <label class="section-label">Profile Picture</label>
+                <div class="avatar-upload" id="avatarUpload">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <div class="placeholder" id="placeholder">
+                            <span class="icon">📷</span>
+                            <span>Upload</span>
+                        </div>
+                    </div>
+                    <input type="file" name="profilePic" id="profilePic" accept="image/*">
+                </div>
+                <p class="file-name-text" id="fileName"></p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="johndoe" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Create a strong password" required>
+            </div>
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="divider"><span>OR</span></div>
+
+        <p class="footer-text">Already have an account? <a href="/login">Sign In</a></p>
+    </div>
+
+    <script>
+        const avatarUpload = document.getElementById('avatarUpload');
+        const profilePic = document.getElementById('profilePic');
+        const avatarPreview = document.getElementById('avatarPreview');
+        const placeholder = document.getElementById('placeholder');
+        const fileName = document.getElementById('fileName');
+
+        avatarUpload.addEventListener('click', () => profilePic.click());
+
+        avatarUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            avatarPreview.style.borderColor = '#10b981';
+            avatarPreview.style.background = 'rgba(16,185,129,0.08)';
+        });
+
+        avatarUpload.addEventListener('dragleave', () => {
+            avatarPreview.style.borderColor = 'rgba(255,255,255,0.2)';
+            avatarPreview.style.background = 'rgba(255,255,255,0.05)';
+        });
+
+        avatarUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            avatarPreview.style.borderColor = 'rgba(255,255,255,0.2)';
+            avatarPreview.style.background = 'rgba(255,255,255,0.05)';
+            if (e.dataTransfer.files.length) {
+                profilePic.files = e.dataTransfer.files;
+                showPreview(e.dataTransfer.files[0]);
+            }
+        });
+
+        profilePic.addEventListener('change', () => {
+            if (profilePic.files.length) showPreview(profilePic.files[0]);
+        });
+
+        function showPreview(file) {
+            fileName.textContent = file.name;
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    avatarPreview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
